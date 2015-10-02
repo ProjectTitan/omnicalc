@@ -13,13 +13,14 @@ class CalculationsController < ApplicationController
         # The special word the user input is in the string @special_word.
         # ========================================================
 
-        @word_count = "Replace this string with your answer"
+        @word_count = @text.split.count
+       
+        @character_count_with_spaces = @text.length
 
-        @character_count_with_spaces = "Replace this string with your answer"
+        @character_count_without_spaces = @text.gsub(" ", "").length
 
-        @character_count_without_spaces = "Replace this string with your answer"
+        @occurrences = @text.split.count(@special_word)
 
-        @occurrences = "Replace this string with your answer"
         render 'word_count'
     end
 
@@ -42,7 +43,7 @@ class CalculationsController < ApplicationController
         rate_per_period = @apr / 100 / 12
         number_periods = @years * 12
 
-        @monthly_payment = "Replace this string with your answer"
+        @monthly_payment = (present_value * rate_per_period) /(1 - (1 + rate_per_period) **- number_periods)
     end
 
     def time_between_form
@@ -83,25 +84,25 @@ class CalculationsController < ApplicationController
         # The numbers the user input are in the array @numbers.
         # =====================================================
 
-        @sorted_numbers = "Replace this string with your answer"
+        @sorted_numbers = @numbers.sort
 
-        @count = "Replace this string with your answer"
+        @count = @numbers.count
 
-        @minimum = "Replace this string with your answer"
+        @minimum = @numbers.min
 
-        @maximum = "Replace this string with your answer"
+        @maximum = @numbers.max
 
-        @range = "Replace this string with your answer"
+        @range = @numbers.to_a
 
-        @median = "Replace this string with your answer"
+        @median = @numbers.length % 2 == 1 ? @sorted_numbers[@numbers.length/2] : (@sorted_numbers[@numbers.length/2 - 1] + @sorted_numbers[@numbers.length/2]).to_f / 2
 
-        @sum = "Replace this string with your answer"
+        @sum = @numbers.inject(:+)
 
-        @mean = "Replace this string with your answer"
+        @mean = @numbers.reduce(:+).to_f / @numbers.size
 
-        @variance = "Replace this string with your answer"
+        @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2}
 
-        @standard_deviation = "Replace this string with your answer"
+        @standard_deviation = Math.sqrt(@variance)
 
         render  'descriptive_statistics'
     end
